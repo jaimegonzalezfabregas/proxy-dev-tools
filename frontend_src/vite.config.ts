@@ -9,4 +9,8 @@ export default {
     }
   },
 
+  build: {
+    outDir: '../app/fontend_dist'
+  }
+
 }

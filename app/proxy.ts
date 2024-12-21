@@ -1,42 +1,18 @@
 import http from "node:http";
 import url from "node:url";
 import fs from "node:fs";
-import { WebSocket } from "ws";
-import { type WSMessage } from "../data_types/comunications.ts";
-let mole_src: string = fs.readFileSync("../mole/mole.js");
+
 
 import { type Request } from "../data_types/network.ts";
+import { send_network_ws } from "./ws.ts";
 
 let request_list: Request[] = [];
 
-function send_network_ws(request_id, s) {
-
-    let payload: WSMessage = {
-        class: "network",
-        request_id,
-        request: request_list[request_id]
-    }
-
-    s?.send(JSON.stringify(payload));
+export function reset_request_list(){
+    request_list = [];
 }
 
-function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: number, WS_PORT: number) {
-
-    let global_socket;
-
-    Deno.serve({ port: 8888, hostname: "localhost" }, (req) => {
-
-        if (req.headers.get("upgrade") != "websocket") {
-            return new Response(null, { status: 501 });
-        }
-
-        const { socket, response } = Deno.upgradeWebSocket(req);
-
-        request_list = [];
-        global_socket = socket;
-
-        return response;
-    });
+export function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: number) {
 
     // Create an HTTP server
     const server = http.createServer((req, res) => {
@@ -70,7 +46,7 @@ function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: nu
                 headers: proxyResponse.headers,
             }
 
-            send_network_ws(request_i, global_socket);
+            send_network_ws(request_i, request_list[request_i]);
 
             // Set the response headers
 
@@ -82,7 +58,7 @@ function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: nu
                     if (request_list[request_i].server != null) {
 
                         request_list[request_i].server.body += chunk;
-                        send_network_ws(request_i, global_socket);
+                        send_network_ws(request_i, request_list[request_i]);
 
                     }
                 });
@@ -90,13 +66,14 @@ function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: nu
                 // End the response when the proxy response ends
                 proxyResponse.on('end', () => {
                     if (request_list[request_i].server != null) {
+                        let mole_src: string = fs.readFileSync("./mole/mole.js");
 
                         const body = request_list[request_i].server.body.replace("</head>", "<script>" + mole_src + "</script></head>")
 
                         res.writeHead(proxyResponse.statusCode, { ...proxyResponse.headers, "content-length": body.length });
                         res.write(body);
                         res.end();
-                        send_network_ws(request_i, global_socket);
+                        send_network_ws(request_i, request_list[request_i]);
 
                     }
 
@@ -108,7 +85,7 @@ function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: nu
                 proxyResponse.on('data', (chunk) => {
                     if (request_list[request_i].server != null) {
                         request_list[request_i].server.body += chunk;
-                        send_network_ws(request_i, global_socket);
+                        send_network_ws(request_i, request_list[request_i]);
                         res.write(chunk);
                     }
                 });
@@ -132,7 +109,7 @@ function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: nu
         // Manually handle the request data from the client to the target server
         req.on('data', (chunk) => {
             request_list[request_i].client.body += chunk;
-            send_network_ws(request_i, global_socket);
+            send_network_ws(request_i, request_list[request_i]);
             proxyRequest.write(chunk);
         });
 
@@ -144,8 +121,9 @@ function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_PORT: nu
 
     // Start the server
     server.listen(LOCAL_PORT, () => {
-        console.log(`Proxy server is running on http://localhost:${LOCAL_PORT}`);
+        console.log("> Proxy exposed on port", LOCAL_PORT);
+        console.log(`> Proxy will target ${TARGET_HOST}:${TARGET_PORT}`);
+
     });
 }
 
-create_channel(5501, "localhost", 5500, 8888);

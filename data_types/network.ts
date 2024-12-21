@@ -9,3 +9,4 @@ export type Request = {
     path: string;
     status_code: number;
 };
+

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type Request } from "../../data_types/network";
+    import { type Request } from "../../../../../data_types/network";
 
     export let request: Request;
 </script>
