@@ -42,7 +42,6 @@
 
     .panel {
         overflow: auto; /* Allow scrolling if content overflows */
-        background: #f0f0f0; /* Light background for panels */
     }
 
     .resizer {

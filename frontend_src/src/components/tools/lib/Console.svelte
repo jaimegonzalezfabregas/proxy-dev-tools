@@ -10,6 +10,7 @@
           }
         | {
               type: "reload_marker";
+              index: number;
           };
     import { type ConsoleLine } from "./Console";
 
@@ -21,22 +22,16 @@
 
     $: collapsed_console_lines = (() => {
         const result: ConsoleLineGroup[] = [];
-
         for (let i = 0; i < console_lines.length; i++) {
             const currentLine = console_lines[i];
 
-            // Skip reload markers
-            if (currentLine.type === "reload_marker") {
-                continue;
-            }
-
             // If the result array is empty or the current line is different from the last one
 
-            const last_line = result[result.length - 1];
-
-            if (
+            const last_line = result[i - 1];
+            if (currentLine.type == "reload_marker") {
+                result.push({ type: "reload_marker", index: i });
+            } else if (
                 result.length === 0 ||
-                last_line.type == "reload_marker" ||
                 JSON.stringify(currentLine.contents) !==
                     JSON.stringify(last_line.contents)
             ) {
@@ -51,6 +46,7 @@
                 result[result.length - 1].time = currentLine.time;
             }
         }
+        console.log(result);
 
         return result;
     })();
@@ -63,8 +59,10 @@
                 <div>
                     page reloaded
                     <a
-                        on:click={() =>
-                            (console_lines = console_lines.splice(i))}
+                        on:click={() => {
+                            console.log(line.index);
+                            console_lines = console_lines.splice(line.index);
+                        }}
                     >
                         remove older logs
                     </a>

@@ -32,40 +32,51 @@
 
 					switch (data.msg.code) {
 						case "start":
-							console_lines.push({
-								type: "reload_marker",
-							});
-							console_lines = console_lines;
+							console_lines = [
+								...console_lines,
+								{
+									type: "reload_marker",
+								},
+							];
+							console.log("added reload marker", console_lines);
+
 							break;
 						case "console log":
-							console_lines.push({
-								contents: data.msg.elms,
-								type: "log",
-								time: new Date(),
-								action: undefined,
-							});
-							console_lines = console_lines;
+							console_lines = [
+								...console_lines,
+								{
+									contents: data.msg.elms,
+									type: "log",
+									time: new Date(),
+									action: undefined,
+								},
+							];
 							break;
 						case "console error":
-							console_lines.push({
-								contents: data.msg.elms,
-								type: "error",
-								time: new Date(),
-								action: undefined,
-							});
-							console_lines = console_lines;
+							console_lines = [
+								...console_lines,
+								{
+									contents: data.msg.elms,
+									type: "error",
+									time: new Date(),
+									action: undefined,
+								},
+							];
 							break;
 						case "execute error":
-							console_lines.push({
-								contents: [data.msg.error],
-								type: "error",
-								time: new Date(),
-								action: undefined,
-							});
-							console_lines = console_lines;
+							console_lines = [
+								...console_lines,
+								{
+									contents: [data.msg.error],
+									type: "error",
+									time: new Date(),
+									action: undefined,
+								},
+							];
 
 							break;
 					}
+					console.log("end of processing relay", console_lines);
 			}
 		});
 	} catch (error) {

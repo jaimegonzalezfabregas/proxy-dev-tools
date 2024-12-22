@@ -45,7 +45,7 @@
             >
         </div>
     </nav>
-    <div class="tab-content" id="nav-tabContent">
+    <div class="tab-content contents" id="nav-tabContent">
         <div
             class="tab-pane fade show active"
             id="nav-inspector"
@@ -72,3 +72,14 @@
         </div>
     </div>
 </main>
+
+<style>
+    .nav-tabs {
+        height: 7vh;
+    }
+    .contents{
+        height: 93vh;
+        background-color: #eeeeee;
+        overflow: auto;
+    }
+</style>
