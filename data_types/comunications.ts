@@ -6,5 +6,5 @@ export type WSMessage = {
     request: Request
 } | {
     class: "relay",
-    msg: { code: "start" } | { code: "console log" | "console error", elms: any[] } | { code: "execute error", ev: any, src: string, lineno: number, colno: number, error: any }
+    msg: { code: "start" } | {code: "inspector", raw_html: string} | { code: "console log" | "console error", elms: any[] } | { code: "execute error", ev: any, src: string, lineno: number, colno: number, error: any }
 }

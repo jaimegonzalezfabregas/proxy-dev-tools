@@ -37,7 +37,7 @@
 <style>
     .side2side_container {
         display: flex;
-        height: 100vh; /* Full height */
+        height: 93vh;
     }
 
     .panel {

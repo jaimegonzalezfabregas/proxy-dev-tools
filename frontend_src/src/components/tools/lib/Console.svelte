@@ -5,7 +5,6 @@
               contents: any[];
               time: Date;
               type: "log" | "error";
-              action: undefined;
               repetitions: Date[];
           }
         | {
@@ -13,6 +12,7 @@
               index: number;
           };
     import { type ConsoleLine } from "./Console";
+    import ObjectDisplay from "./console/ObjectDisplay.svelte";
 
     $: if (console_lines[0] && console_lines[0].type == "reload_marker") {
         console_lines = console_lines.splice(1);
@@ -27,13 +27,12 @@
 
             // If the result array is empty or the current line is different from the last one
 
-            const last_line = result[i - 1];
             if (currentLine.type == "reload_marker") {
                 result.push({ type: "reload_marker", index: i });
             } else if (
                 result.length === 0 ||
                 JSON.stringify(currentLine.contents) !==
-                    JSON.stringify(last_line.contents)
+                    JSON.stringify(result[result.length - 1].contents)
             ) {
                 // Add the current line to the result with a repetition count of 1
                 result.push({
@@ -79,7 +78,13 @@
             </div>
 
             {#each line.contents as word}
-                {JSON.stringify(word)}
+                <span style="margin-right:10px">
+                    {#if typeof word === "string"}
+                        {word}
+                    {:else}
+                        <ObjectDisplay obj={word}></ObjectDisplay>
+                    {/if}
+                </span>
             {/each}
         </div>
     {/if}

@@ -48,7 +48,6 @@
 									contents: data.msg.elms,
 									type: "log",
 									time: new Date(),
-									action: undefined,
 								},
 							];
 							break;
@@ -59,7 +58,6 @@
 									contents: data.msg.elms,
 									type: "error",
 									time: new Date(),
-									action: undefined,
 								},
 							];
 							break;
@@ -70,10 +68,11 @@
 									contents: [data.msg.error],
 									type: "error",
 									time: new Date(),
-									action: undefined,
 								},
 							];
 
+							break;
+						case "inspector":
 							break;
 					}
 					console.log("end of processing relay", console_lines);

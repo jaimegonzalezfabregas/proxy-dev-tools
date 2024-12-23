@@ -8,7 +8,7 @@ import { send_network_ws } from "./ws.ts";
 
 let request_list: Request[] = [];
 
-export function reset_request_list(){
+export function reset_request_list() {
     request_list = [];
 }
 
@@ -17,6 +17,7 @@ export function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_P
     // Create an HTTP server
     const server = http.createServer((req, res) => {
         const parsedUrl = url.parse(req.url);
+
 
         let request_i = request_list.length;
         request_list.push({
@@ -28,6 +29,9 @@ export function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_P
             },
             "server": null,
         })
+
+        send_network_ws(request_i, request_list[request_i]);
+
 
         const options = {
             hostname: TARGET_HOST,
@@ -50,7 +54,6 @@ export function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_P
 
             // Set the response headers
 
-
             if (proxyResponse.headers["content-type"] && proxyResponse.headers["content-type"].includes("html")) {
 
                 // Manually handle the response data from the target server
@@ -61,6 +64,7 @@ export function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_P
                         send_network_ws(request_i, request_list[request_i]);
 
                     }
+
                 });
 
                 // End the response when the proxy response ends
