@@ -1,6 +1,6 @@
 # Proxy Dev Tools
 
-## Whats this tool about?
+## What's this tool about?
 
 This tool solves a problem I found programing inside the Meta Quest 3. The built in browser has no dev tools aviable. which would be very useful while debuging WebXR experiencies. My tool proxys your project (which means that acts as a HTTP middle man), injecting a small code snippet in the web page that will allow you to access some basic debugging functionality. The debuging interface is hosted on another web page, wich makes it posible to use wherever you can access your original page.
 
