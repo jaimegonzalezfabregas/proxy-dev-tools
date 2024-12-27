@@ -13,16 +13,22 @@ This tool solves a problem I found programing inside the Meta Quest 3. The built
 ![Network snifing](image-2.png)
 
 ## Running app in dev mode
+
+Run `npm i` in app/ and frontend_src/ before the first run.
+
 ```bash
 cd app
 deno run -A main.ts 
 ```
 
 ## Building from source
-Not working, deno doesn't like compiling node:ws
+
+> Not working, deno doesn't like compiling when node:ws is a dependency.
+
+As in dev mode, run `npm i` in app/ and frontend_src/ before the first run.
+
 ```bash
 cd frontend_src
-npm i
 npm run build
 ```
 Before going to the next step go to app/frontend.ts file and change line 5 to enter production mode. change to `if (true) {`
@@ -32,4 +38,4 @@ deno compile main.ts
 ```
 
 ## Contributing
-Yes please, drop a PR on this repo or mail me at jaimegonzalezfabregas@gmail.com
+Yes please, drop a PR on this repo or mail me at jaimegonzalezfabregas@gmail.com. 
