@@ -45,8 +45,6 @@
                 result[result.length - 1].time = currentLine.time;
             }
         }
-        console.log(result);
-
         return result;
     })();
 </script>
@@ -59,7 +57,6 @@
                     page reloaded
                     <a
                         on:click={() => {
-                            console.log(line.index);
                             console_lines = console_lines.splice(line.index);
                         }}
                     >

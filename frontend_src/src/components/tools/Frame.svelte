@@ -8,6 +8,7 @@
 
     export let console_lines: ConsoleLine[];
     export let requests: Request[];
+    export let page_html: string;
 </script>
 
 <main>
@@ -52,7 +53,7 @@
             role="tabpanel"
             aria-labelledby="nav-inspector-tab"
         >
-            <Inspector></Inspector>
+            <Inspector bind:page_html ></Inspector>
         </div>
         <div
             class="tab-pane fade"

@@ -5,8 +5,6 @@
 
     export let requests: Request[];
 
-    $: console.log(requests);
-
     let selected_request: Request | undefined = undefined;
 </script>
 
