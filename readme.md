@@ -1,4 +1,4 @@
-# PROXY DEV TOOLS
+# Proxy Dev Tools
 
 ## Whats this tool about?
 
