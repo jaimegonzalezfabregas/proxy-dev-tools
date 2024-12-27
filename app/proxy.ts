@@ -70,9 +70,10 @@ export function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_P
                 // End the response when the proxy response ends
                 proxyResponse.on('end', () => {
                     if (request_list[request_i].server != null) {
-                        let mole_src: string = fs.readFileSync("./mole/mole.js");
+                        let mole_src_js: string = fs.readFileSync("./mole/mole.js");
+                        let mole_src_css: string = fs.readFileSync("./mole/mole.css");
 
-                        const body = request_list[request_i].server.body.replace("</head>", "<script>" + mole_src + "</script></head>")
+                        const body = request_list[request_i].server.body.replace("</head>", "<style>" + mole_src_css + "</style><script>" + mole_src_js + "</script></head>")
 
                         res.writeHead(proxyResponse.statusCode, { ...proxyResponse.headers, "content-length": body.length });
                         res.write(body);

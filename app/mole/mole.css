@@ -1,0 +1,39 @@
+.highlighted {
+    border: 5px dashed red;
+    /* Position relative to allow absolute positioning of the overlay */
+
+    filter: contrast(0.5);
+
+}
+
+/* Button styles */
+#highlightButton {
+    position: fixed;
+    /* Change to fixed to keep it on screen */
+    top: 10px;
+    /* Distance from the top */
+    right: 10px;
+    /* Distance from the right */
+    padding: 10px 20px;
+    /* Padding for the button */
+    background-color: #007BFF;
+    /* Button background color */
+    color: white;
+    /* Text color */
+    border: none;
+    /* No border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    opacity: 0.5;
+    /* Start semi-transparent */
+    transition: opacity 0.3s;
+    /* Transition for opacity */
+}
+
+/* Optional: Change opacity on hover */
+#highlightButton:hover {
+    opacity: 1;
+    /* Fully opaque on hover */
+}

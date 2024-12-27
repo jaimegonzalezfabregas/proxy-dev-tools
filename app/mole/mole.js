@@ -89,64 +89,65 @@
 
     hanndle_html_change();
 
-    // Create a button element
-    const button = document.createElement('button');
-    button.innerText = 'Click Me';
 
-    // Style the button
-    button.style.position = 'absolute';
-    button.style.top = '10px';
-    button.style.right = '10px';
-    button.style.padding = '10px 20px';
-    button.style.backgroundColor = '#007BFF';
-    button.style.color = 'white';
-    button.style.border = 'none';
-    button.style.borderRadius = '5px';
-    button.style.cursor = 'pointer';
-    button.style.opacity = '0.5'; // Start semi-transparent
-    button.style.transition = 'opacity 0.3s'; // Transition for opacity
+    document.addEventListener('DOMContentLoaded', () => {
+        // Create a button element
+        const button = document.createElement('button');
+        button.innerText = 'Inspect';
 
-    // Variable to track selecting mode
-    let selectingMode = false;
+        button.id = 'highlightButton'; // Set the button ID
 
-    // Add event listeners for mouse enter and leave
-    button.addEventListener('mouseenter', () => {
-        button.style.opacity = '1'; // Fully opaque on hover
-    });
+        // Variable to track selecting mode
+        let selectingMode = false;
 
-    button.addEventListener('mouseleave', () => {
-        button.style.opacity = '0.5'; // Semi-transparent when not hovered
-    });
+        // Add click event to the button to toggle selecting mode
+        button.addEventListener('click', () => {
+            selectingMode = !selectingMode; // Toggle selecting mode
+            if (selectingMode) {
+                button.innerText = 'Selecting Mode ON';
+            } else {
+                // Remove all selections
+                const highlightedElements = document.querySelectorAll('[proxy_dev_tools_highlight]');
+                highlightedElements.forEach(element => {
+                    element.removeAttribute('proxy_dev_tools_highlight');
+                });
 
-    // Add click event to the button to toggle selecting mode
-    button.addEventListener('click', () => {
-        selectingMode = !selectingMode; // Toggle selecting mode
-        if (selectingMode) {
-            button.innerText = 'Selecting Mode ON';
-        } else {
-            // Remove all selections
-            const highlightedElements = document.querySelectorAll('[proxy_dev_tools_highlight]');
-            highlightedElements.forEach(element => {
-                element.removeAttribute('proxy_dev_tools_highlight');
-            });
-            button.innerText = 'Click Me';
-            hanndle_html_change();
-        }
-    });
+                // Remove the highlighted class from all elements
+                const allHighlightedElements = document.querySelectorAll('.highlighted');
+                allHighlightedElements.forEach(element => {
+                    element.classList.remove('highlighted');
+                });
 
-    // Add click event to the document to handle element selection
-    document.addEventListener('click', (event) => {
-        if (selectingMode) {
-            // Prevent the button click from triggering this event
-            if (event.target !== button) {
-                event.target.setAttribute('proxy_dev_tools_highlight', 'true');
+
+                button.innerText = 'Inspect ';
                 hanndle_html_change();
             }
-        }
+        });
+
+        document.addEventListener('mouseover', (event) => {
+            if (selectingMode) {
+                event.target.classList.add('highlighted');
+            }
+        });
+
+        document.addEventListener('mouseout', (event) => {
+            if (selectingMode) {
+                event.target.classList.remove('highlighted');
+            }
+        });
+
+        // Add click event to the document to handle element selection
+        document.addEventListener('click', (event) => {
+            if (selectingMode) {
+                // Prevent the button click from triggering this event
+                if (event.target !== button) {
+                    event.target.setAttribute('proxy_dev_tools_highlight', 'true');
+                }
+            }
+        });
+
+        // Append the button to the body
+        document.body.appendChild(button);
     });
-
-    // Append the button to the body
-    document.body.appendChild(button);
-
 
 })()
