@@ -21,12 +21,12 @@
         <li class="nav-item" role="presentation">
             <button
                 class="nav-link active"
-                id="home-tab"
+                id="headers-tab"
                 data-bs-toggle="tab"
-                data-bs-target="#home"
+                data-bs-target="#headers"
                 type="button"
                 role="tab"
-                aria-controls="home"
+                aria-controls="headers"
                 aria-selected="true">Headers</button
             >
         </li>
@@ -34,12 +34,12 @@
             <li class="nav-item" role="presentation">
                 <button
                     class="nav-link"
-                    id="profile-tab"
+                    id="request-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#profile"
+                    data-bs-target="#request"
                     type="button"
                     role="tab"
-                    aria-controls="profile"
+                    aria-controls="request"
                     aria-selected="false">Request</button
                 >
             </li>
@@ -49,12 +49,12 @@
             <li class="nav-item" role="presentation">
                 <button
                     class="nav-link"
-                    id="contact-tab"
+                    id="response-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#contact"
+                    data-bs-target="#response"
                     type="button"
                     role="tab"
-                    aria-controls="contact"
+                    aria-controls="response"
                     aria-selected="false">Response</button
                 >
             </li>
@@ -63,16 +63,16 @@
     <div class="tab-content p-2" id="myTabContent">
         <div
             class="tab-pane fade show active"
-            id="home"
+            id="headers"
             role="tabpanel"
-            aria-labelledby="home-tab"
+            aria-labelledby="headers-tab"
         >
             <h1>Client</h1>
 
-            <HeaderDetail HTTPmessage={client}></HeaderDetail>
+            <HeaderDetail bind:HTTPmessage={client}></HeaderDetail>
             <h1>Server</h1>
             {#if server}
-                <HeaderDetail HTTPmessage={server}></HeaderDetail>
+                <HeaderDetail bind:HTTPmessage={server}></HeaderDetail>
             {:else}
                 Pending...
             {/if}
@@ -80,22 +80,22 @@
         {#if client.body != ""}
             <div
                 class="tab-pane fade"
-                id="profile"
+                id="request"
                 role="tabpanel"
-                aria-labelledby="profile-tab"
+                aria-labelledby="request-tab"
             >
-                <BodyDetail HTTPmessage={client}></BodyDetail>
+                <BodyDetail bind:HTTPmessage={client}></BodyDetail>
             </div>
         {/if}
 
         {#if server}
             <div
                 class="tab-pane fade"
-                id="contact"
+                id="response"
                 role="tabpanel"
-                aria-labelledby="contact-tab"
+                aria-labelledby="response-tab"
             >
-                <BodyDetail HTTPmessage={server}></BodyDetail>
+                <BodyDetail bind:HTTPmessage={server}></BodyDetail>
             </div>
         {/if}
     </div>

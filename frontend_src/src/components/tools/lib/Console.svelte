@@ -4,14 +4,24 @@
         | {
               contents: any[];
               time: Date;
-              type: "log" | "error";
+              type: "log" | "console error";
               repetitions: Date[];
           }
         | {
               type: "reload_marker";
               index: number;
+          }
+        | {
+              type: "execute error";
+              ev: string;
+              src: string;
+              lineno: string;
+              colno: string;
+              time: Date;
+              error: any;
           };
     import { type ConsoleLine } from "./Console";
+    import ErrorDisplay from "./console/ErrorDisplay.svelte";
     import ObjectDisplay from "./console/ObjectDisplay.svelte";
 
     $: if (console_lines[0] && console_lines[0].type == "reload_marker") {
@@ -29,6 +39,8 @@
 
             if (currentLine.type == "reload_marker") {
                 result.push({ type: "reload_marker", index: i });
+            } else if (currentLine.type == "execute error") {
+                result.push(currentLine);
             } else if (
                 result.length === 0 ||
                 JSON.stringify(currentLine.contents) !==
@@ -66,23 +78,31 @@
             </div>
         </div>
     {:else}
-        <div class="line">
+        <div
+            class="line {line.type == 'console error' ||
+            line.type == 'execute error'
+                ? 'error'
+                : ''}"
+        >
             <div class="float-end time px-2">
-                {#if line.repetitions.length != 1}
+                {#if line.repetitions && line.repetitions.length != 1}
                     (x{line.repetitions.length})
                 {/if}
                 {line.time.toLocaleTimeString()}
             </div>
-
-            {#each line.contents as word}
-                <span style="margin-right:10px">
-                    {#if typeof word === "string"}
-                        {word}
-                    {:else}
-                        <ObjectDisplay obj={word}></ObjectDisplay>
-                    {/if}
-                </span>
-            {/each}
+            {#if line.type == "execute error"}
+                <ErrorDisplay bind:line></ErrorDisplay>
+            {:else}
+                {#each line.contents as word}
+                    <span style="margin-right:10px">
+                        {#if typeof word === "string"}
+                            {word}
+                        {:else}
+                            <ObjectDisplay obj={word}></ObjectDisplay>
+                        {/if}
+                    </span>
+                {/each}
+            {/if}
         </div>
     {/if}
 {:else}
@@ -113,5 +133,9 @@
     .separator {
         border-bottom: solid 1px grey;
         background-color: rgb(221, 220, 220);
+    }
+
+    .error {
+        background-color: rgba(255, 65, 65, 0.295);
     }
 </style>

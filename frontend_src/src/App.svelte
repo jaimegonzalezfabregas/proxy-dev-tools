@@ -53,7 +53,7 @@
 								...console_lines,
 								{
 									contents: data.msg.elms,
-									type: "error",
+									type: "console error",
 									time: new Date(),
 								},
 							];
@@ -62,8 +62,8 @@
 							console_lines = [
 								...console_lines,
 								{
-									contents: [data.msg.error],
-									type: "error",
+									...data.msg,
+									type: "execute error",
 									time: new Date(),
 								},
 							];
