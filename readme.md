@@ -23,7 +23,7 @@ deno run -A main.ts
 
 ## Building from source
 
-> Not working, deno doesn't like compiling when node:ws is a dependency.
+> Not working, deno doesn't like compiling when node:ws is a dependency. WIP
 
 As in dev mode, run `npm i` in app/ and frontend_src/ before the first run.
 
