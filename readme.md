@@ -31,11 +31,13 @@ As in dev mode, run `npm i` in app/ and frontend_src/ before the first run.
 cd frontend_src
 npm run build
 ```
-Before going to the next step go to app/frontend.ts file and change line 5 to enter production mode. change to `if (true) {`
+Before going to the next step go to app/frontend.ts file and change line 5 to enter production mode. Change to `if (true) {`
 ```bash
 cd ../app
 deno compile main.ts 
 ```
+
+Before the first release a CLI will be needed, which is WIP
 
 ## Contributing
 Yes please, drop a PR on this repo or mail me at jaimegonzalezfabregas@gmail.com. 
