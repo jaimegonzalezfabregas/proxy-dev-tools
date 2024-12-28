@@ -4,7 +4,7 @@
 
 If your app is served at localhost:5500 then run the program as
 ```bash
-./app localhost:5500
+./pdt localhost:5500
 ```
 The tool will display on the stdout the chosen ports:
 ```
@@ -20,7 +20,7 @@ Pay attention to the remarks in parenthesis to guide your next steps.
 
 > Also try running 
 > ```bash
-> ./app --help
+> ./pdt --help
 > ```
 
 If you find any problem I'd love to help. Open an issue in this repo or mail me at jaimegonzalezfabregas@gmail.com

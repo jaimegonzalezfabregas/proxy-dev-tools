@@ -15,6 +15,6 @@ targets=(
 # Loop through each target and run the compile command
 for target in "${targets[@]}"; do
     # Compile the Deno application for the current target
-    deno compile -A --no-check main.ts --output "$PWD/builds/app_$target"
-    mv app "../builds/app_$target"
+    deno compile -A --no-check main.ts
+    mv app "../builds/pdt_$target"
 done
