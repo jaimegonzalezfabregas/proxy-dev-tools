@@ -10,7 +10,7 @@ export default {
   },
 
   build: {
-    outDir: '../app/fontend_dist'
+    outDir: '../app/frontend_dist'
   }
 
 }

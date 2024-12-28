@@ -1,5 +1,29 @@
 # Proxy Dev Tools
 
+## Quick start
+
+If your app is served at localhost:5500 then run the program as
+```bash
+./app localhost:5500
+```
+The tool will display on the stdout the chosen ports:
+```
+> Running frontend on port 5173  (open localhost:5173 to see the dev tools)
+> frontend WS exposed on port 8888
+> mole WS served on 8889
+Listening on http://[::1]:8888/
+Listening on http://[::1]:8889/
+> Proxy exposed on port 5501  (open localhost:5501 to run your web)
+> Proxy will target localhost:5500
+```
+Pay attention to the remarks in parenthesis to guide your next steps.
+
+> Also try running 
+> ```bash
+> ./app --help
+> ```
+
+If you find any problem I'd love to help. Open an issue in this repo or mail me at jaimegonzalezfabregas@gmail.com
 ## What's this tool about?
 
 This tool solves a problem I found programing inside the Meta Quest 3. The built in browser has no dev tools aviable. which would be very useful while debuging WebXR experiencies. My tool proxys your project (which means that acts as a HTTP middle man), injecting a small code snippet in the web page that will allow you to access some basic debugging functionality. The debuging interface is hosted on another web page, wich makes it posible to use wherever you can access your original page.
@@ -23,21 +47,14 @@ deno run -A main.ts
 
 ## Building from source
 
-> Not working, deno doesn't like compiling when node:ws is a dependency. WIP
-
 As in dev mode, run `npm i` in app/ and frontend_src/ before the first run.
 
 ```bash
 cd frontend_src
 npm run build
-```
-Before going to the next step go to app/frontend.ts file and change line 5 to enter production mode. Change to `if (true) {`
-```bash
 cd ../app
-deno compile main.ts 
+deno compile -A --no-check main.ts 
 ```
-
-Before the first release a CLI will be needed, which is WIP
 
 ## Contributing
 Yes please, drop a PR on this repo or mail me at jaimegonzalezfabregas@gmail.com. 

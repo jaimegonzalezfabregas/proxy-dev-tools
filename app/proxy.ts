@@ -126,7 +126,7 @@ export function create_channel(LOCAL_PORT: number, TARGET_HOST: string, TARGET_P
 
     // Start the server
     server.listen(LOCAL_PORT, () => {
-        console.log("> Proxy exposed on port", LOCAL_PORT);
+        console.log("> Proxy exposed on port", LOCAL_PORT, " (open http://localhost:" + LOCAL_PORT + " to run your web)");
         console.log(`> Proxy will target ${TARGET_HOST}:${TARGET_PORT}`);
 
     });
