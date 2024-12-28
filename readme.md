@@ -47,6 +47,8 @@ deno run -A main.ts
 
 ## Building from source
 
+a compile.sh script is provided
+
 As in dev mode, run `npm i` in app/ and frontend_src/ before the first run.
 
 ```bash
